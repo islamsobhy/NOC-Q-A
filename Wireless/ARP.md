@@ -53,14 +53,35 @@
 
 ---
 
-### Key Differences and Relationship
+### 3. RARP (Reverse ARP)
 
-| Feature           | ARP (Address Resolution Protocol)               | Proxy ARP                                    |
-| :---------------- | :---------------------------------------------- | :------------------------------------------- |
-| **Purpose** | Maps IP to MAC on the **local segment** | Maps IP to MAC for **remote segments** via a router |
-| **Responder** | The actual target host                          | The router (on behalf of the target host)    |
-| **Scope** | Within a single broadcast domain/subnet         | Across broadcast domains/subnets             |
-| **Host Knowledge**| Host knows target is local (or needs gateway)   | Host *thinks* target is local, but it's not |
-| **Modern Usage** | **Essential** for IP networking               | Generally **disabled** (legacy/specific cases) |
+* **Concept:** RARP is the inverse of ARP. Its purpose is to resolve a known Layer 2 MAC address to its corresponding Layer 3 IP address.
 
-Understanding both ARP and Proxy ARP is crucial for deep network troubleshooting and for comprehending how IP addresses are resolved to MAC addresses for frame forwarding, especially across subnet boundaries.
+* **How it Works:**
+    1.  A device (typically a diskless workstation or a network boot client) that knows its own MAC address but does *not* have an IP address sends a **RARP Request** as a Layer 2 broadcast onto the network.
+    2.  A **RARP Server** on the network receives this broadcast.
+    3.  The RARP Server consults a table that maps MAC addresses to IP addresses.
+    4.  If it finds a match for the requesting MAC address, the RARP Server sends a **RARP Reply** back to the client, providing its IP address.
+
+* **Key Characteristics:**
+    * **Reverse mapping:** MAC to IP.
+    * Uses Layer 2 broadcast for requests.
+    * **Largely obsolete in modern networks.** It has been superseded by **DHCP (Dynamic Host Configuration Protocol)**.
+
+* **Why DHCP Replaced RARP:**
+    * **More Comprehensive:** DHCP can provide not just the IP address, but also the subnet mask, default gateway, DNS server addresses, and other network configuration parameters. RARP only provides the IP address.
+    * **Flexibility:** DHCP can handle dynamic address assignment (leasing), whereas RARP typically required static MAC-to-IP mappings.
+    * **Scalability:** DHCP servers are more robust and scalable for managing large numbers of clients.
+    * **Relay Support:** DHCP has relay agent support, allowing clients to obtain IP addresses from servers on different subnets, which RARP lacked.
+
+---
+### Summary of Differences
+
+| Feature           | ARP (Address Resolution Protocol)               | Proxy ARP                                    | RARP (Reverse ARP)                          |
+| :---------------- | :---------------------------------------------- | :------------------------------------------- | :------------------------------------------ |
+| **Mapping** | IP to MAC                                       | IP to MAC (router acts as proxy)             | MAC to IP                                   |
+| **Request Type** | Broadcast                                       | Broadcast (from client)                      | Broadcast                                   |
+| **Responder** | Target host                                     | Router (on behalf of target)                 | RARP Server                                 |
+| **Scope** | Local subnet                                    | Cross-subnet (router acts as intermediary)   | Local subnet                                |
+| **Modern Usage** | **Essential** for IP communication              | Generally **disabled** (legacy/niche)        | **Obsolete** (replaced by DHCP)             |
+| **Core Function** | Find MAC for known IP                           | Router "spoofs" MAC for remote IP            | Find IP for known MAC                       |
