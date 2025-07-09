@@ -1,6 +1,5 @@
-# Wireless User Authentication Types: An L3 Engineer's Guide
+# Wireless User Authentication Types
 
-Understanding wireless user authentication types is crucial for an L3 NOC Engineer. This guide covers common methods, their concepts, use cases, and security implications.
 
 ---
 
@@ -88,4 +87,40 @@ Understanding wireless user authentication types is crucial for an L3 NOC Engine
 * **Components:**
     * **Supplicant:** The client device (e.g., laptop, smartphone) running 802.1X client software.
     * **Authenticator:** The Access Point (AP) or wireless controller, which acts as a middleman.
-    * **Authentication Server:** Typically a RADIUS server (e
+    * **Authentication Server:** Typically a RADIUS server (e.g., Cisco ISE, Aruba ClearPass, Microsoft NPS) that holds the user/device credentials and policies.
+
+* **How it works (simplified):**
+    1.  Client associates with the AP (Layer 2 connectivity).
+    2.  The AP puts the client into a restricted state, only allowing EAP (Extensible Authentication Protocol) traffic to the RADIUS server.
+    3.  The Supplicant and Authentication Server exchange authentication messages via EAP (tunneled within 802.1X frames). Common EAP types include:
+        * **PEAP (Protected EAP):** Uses a TLS tunnel to protect inner authentication methods (e.g., MS-CHAPv2 for username/password). Widely used.
+        * **EAP-TLS (Transport Layer Security):** Uses digital certificates for both the client and the server, offering the strongest security. No passwords are exchanged.
+        * **EAP-TTLS (Tunneled TLS):** Similar to PEAP, but uses a TLS tunnel to protect various inner authentication methods.
+        * **EAP-FAST (Flexible Authentication via Secure Tunneling):** Cisco proprietary, uses PACs (Protected Access Credentials) for authentication.
+    4.  If authentication is successful, the RADIUS server sends an "Access-Accept" message to the AP, often including authorization attributes like VLAN assignment, QoS policies, or ACLs.
+    5.  The AP then grants full network access to the client.
+
+* **Use Cases:**
+    * Corporate networks, universities, government agencies – any environment requiring strong security, individual accountability, and dynamic policy assignment.
+
+* **Security Implications:**
+    * Highly secure.
+    * Eliminates shared keys, enables per-user/device policies.
+    * Supports multi-factor authentication.
+    * Can dynamically assign users to specific VLANs based on their identity or group.
+
+---
+
+## Other Authentication Types/Concepts:
+
+* **MAC Authentication Bypass (MAB):** Often used in conjunction with 802.1X. For devices that don't support 802.1X (e.g., old printers, IP phones, some IoT devices), the network can authenticate them based on their MAC address against a database on the RADIUS server. It's less secure as MAC addresses can be spoofed.
+
+* **Wired Equivalent Privacy (WEP):** An older, highly insecure standard. **Never use this.** It's easily cracked and provides almost no real security.
+
+* **WPA (Wi-Fi Protected Access):** An interim standard released before WPA2 to address WEP's flaws. It uses TKIP encryption. While better than WEP, it's considered outdated and vulnerable.
+
+* **Guest Pass (Voucher-based):** A variation of portal authentication where a pre-generated, often time-limited, alphanumeric code is used as a credential on a captive portal.
+
+* **Social Login:** Another captive portal variation where users authenticate using their existing social media accounts (e.g., Google, Facebook).
+
+---
