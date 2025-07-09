@@ -80,4 +80,26 @@ Understanding different wireless network architectures is crucial for designing,
 
 * **Concept:** A subset of wireless architecture where APs connect wirelessly to each other to extend network coverage without needing a wired Ethernet connection to every AP. Some APs act as "mesh portals" (connected to wired network), others as "mesh points" (wireless backhaul).
 * **How it works:**
-    * APs form a self-configuring, self-healing wireless
+    * APs form a self-configuring, self-healing wireless backbone.
+    * Data hops wirelessly from mesh points to mesh portals until it reaches the wired network.
+* **Advantages:**
+    * Flexible deployment in areas where cabling is difficult or expensive (e.g., outdoor areas, historical buildings).
+    * Self-healing capabilities (if one mesh link goes down, traffic can reroute).
+* **Disadvantages:**
+    * Reduced throughput compared to wired backhaul (each wireless hop consumes bandwidth).
+    * Increased latency with multiple hops.
+    * More susceptible to interference.
+* **Best Use Cases:** Outdoor public Wi-Fi, temporary deployments, warehouses, extending coverage to hard-to-wire areas.
+
+---
+
+### Choosing the Right Architecture
+
+The choice of wireless architecture depends heavily on:
+
+* **Network Size and Scale:** How many APs and clients?
+* **Budget:** Initial CapEx vs. ongoing OpEx (subscriptions).
+* **Management Preference:** Centralized control, ease of deployment.
+* **Security Requirements:** Granular control, compliance needs.
+* **Application Needs:** Latency sensitivity, bandwidth demands.
+* **Existing Infrastructure:** Integration with current wired networks.
