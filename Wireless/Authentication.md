@@ -51,11 +51,11 @@
 
 * **Key Delivery**
 
-* Automated Provisioning: This is a significant advantage of DPSK. Instead of manual distribution, the system automates the process of delivering the unique key to the user's device. This can occur in several ways:
-    * Captive Portal Authentication: Users connect to an initial network (sometimes called a provisioning WLAN or an open network) and authenticate through a captive portal (e.g., using corporate credentials, a guest account, or self-registration). Upon successful authentication, the system dynamically generates a unique PSK for that user/device.
-    * Applet or Agent Push: A temporary applet or agent might be pushed to the client device, which then automatically configures the device with the unique PSK and other necessary wireless settings (like SSID).
-    * CSV/Batch Import: For easier management of multiple machines, administrators can also generate a batch of DPSKs (e.g., in a CSV file) and then manually distribute them or incorporate them into imaging scripts for devices.
-    * RADIUS Integration:** In some implementations, DPSKs can be stored on a RADIUS server, and the access point makes a MAC authentication request to the RADIUS server to retrieve the passphrase.
+   * Automated Provisioning: This is a significant advantage of DPSK. Instead of manual distribution, the system automates the process of delivering the unique key to the user's device. This can occur in several ways:
+       * Captive Portal Authentication: Users connect to an initial network (sometimes called a provisioning WLAN or an open network) and authenticate through a captive portal (e.g., using corporate credentials, a guest account, or self-registration). Upon successful authentication, the system dynamically generates a unique PSK for that user/device.
+       * Applet or Agent Push: A temporary applet or agent might be pushed to the client device, which then automatically configures the device with the unique PSK and other necessary wireless settings (like SSID).
+       * CSV/Batch Import: For easier management of multiple machines, administrators can also generate a batch of DPSKs (e.g., in a CSV file) and then manually distribute them or incorporate them into imaging scripts for devices.
+       * RADIUS Integration:** In some implementations, DPSKs can be stored on a RADIUS server, and the access point makes a MAC authentication request to the RADIUS server to retrieve the passphrase.
 
 * **Use Cases:**
     * Environments where 802.1X is too complex to deploy on all devices (e.g., IoT devices, legacy devices) but a higher level of security than a single shared PSK is desired.
